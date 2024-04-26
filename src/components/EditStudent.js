@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './EditStudent.css';
+import UpdatePhoto from './UpdatePhoto'; 
 
 export default function EditStudent({ student, onSave, onCancel }) {
   const [editedStudent, setEditedStudent] = useState(student);
@@ -15,20 +17,18 @@ export default function EditStudent({ student, onSave, onCancel }) {
     event.preventDefault();
 
     try {
-      // Fazer uma solicitação PUT para atualizar o aluno usando fetch
       const response = await fetch(`http://localhost:8080/students/${editedStudent.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(editedStudent)
+        body: JSON.stringify(editedStudent),
       });
 
       if (!response.ok) {
         throw new Error('Failed to update student');
       }
 
-      // Se a atualização for bem-sucedida, chamar a função onSave para atualizar a lista de alunos
       onSave(editedStudent);
       console.log('Student updated successfully');
     } catch (error) {
@@ -47,6 +47,7 @@ export default function EditStudent({ student, onSave, onCancel }) {
             name="name"
             value={editedStudent.name}
             onChange={handleChange}
+            required
           />
         </label>
         <br />
@@ -57,6 +58,7 @@ export default function EditStudent({ student, onSave, onCancel }) {
             name="email"
             value={editedStudent.email}
             onChange={handleChange}
+            required
           />
         </label>
         <br />
@@ -67,6 +69,7 @@ export default function EditStudent({ student, onSave, onCancel }) {
             name="phone"
             value={editedStudent.phone}
             onChange={handleChange}
+            required
           />
         </label>
         <br />
@@ -77,22 +80,16 @@ export default function EditStudent({ student, onSave, onCancel }) {
             name="address"
             value={editedStudent.address}
             onChange={handleChange}
+            required
           />
         </label>
         <br />
-        <label>
-          Photo:
-          <input
-            type="text"
-            name="photo"
-            value={editedStudent.photo}
-            onChange={handleChange}
-          />
-        </label>
         <br />
-        <button type="submit">Save</button>
-        <button type="button" onClick={onCancel}>Cancel</button>
+        <button className='edit' type="submit">Save</button>
+        <button className='edit' type="button" onClick={onCancel}>Cancel</button>
       </form>
+
+      <UpdatePhoto studentId={editedStudent.id} onUpdatePhoto={() => console.log('Photo updated!')} />
     </div>
   );
 }

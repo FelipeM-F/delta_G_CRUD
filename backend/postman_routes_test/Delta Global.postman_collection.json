@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "5cfb3d4f-52cf-4c11-8816-8abf990d655f",
+		"name": "Delta Global",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31094688"
+	},
+	"item": [
+		{
+			"name": "GET_StudentList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST_AddStudent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "photo",
+							"type": "file",
+							"src": "/C:/Users/felip/OneDrive/Documentos/Analise de sistemas/github.png"
+						},
+						{
+							"key": "name",
+							"value": "John",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "teste@teste.com.br",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "55555555",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "123 rua",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT_UpdStudent",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Updated John Doe\",\r\n    \"email\": \"updated_john@example.com\",\r\n    \"phone\": \"987-654-3210\",\r\n    \"address\": \"456 Elm St\",\r\n    \"photo\": \"https://example.com/updated_john.jpg\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/students/(trocar por um id existente)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students",
+						"(trocar por um id existente)"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEL_Student",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/students/(trocar por um id existente)",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"students",
+						"(trocar por um id existente)"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,17 @@
+.edit {
+    background-color: #28a745; 
+    color: white;
+    border: 5px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 80%;
+  }
+  
+  .save-button {
+    margin-right: 10px; 
+  }
+  
+  .cancel-button {
+    margin-left: 10px; 
+  }

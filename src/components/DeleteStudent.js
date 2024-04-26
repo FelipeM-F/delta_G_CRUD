@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../App.css';
 export default function DeleteStudent({ studentId, onDelete }) {
   const handleClick = async () => {
     try {
@@ -14,7 +14,7 @@ export default function DeleteStudent({ studentId, onDelete }) {
         throw new Error('Failed to delete student');
       }
 
-      onDelete();
+      onDelete(studentId);
       console.log('Student deleted successfully');
     } catch (error) {
       console.error('Error deleting student:', error.message);
@@ -22,6 +22,6 @@ export default function DeleteStudent({ studentId, onDelete }) {
   };
 
   return (
-    <button onClick={handleClick}>Delete</button>
+    <button className='delete-button' onClick={handleClick}>Delete</button>
   );
 }

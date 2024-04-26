@@ -1,16 +1,4 @@
 #--------------------------------------------------------------------
-# Example Environment Configuration file
-#
-# This file can be used as a starting point for your own
-# custom .env files, and contains most of the possible settings
-# available in a default install.
-#
-# By default, all of the settings are commented out. If you want
-# to override the setting, you must un-comment it by removing the '#'
-# at the beginning of the line.
-#--------------------------------------------------------------------
-
-#--------------------------------------------------------------------
 # ENVIRONMENT
 #--------------------------------------------------------------------
 
@@ -20,23 +8,23 @@
 # APP
 #--------------------------------------------------------------------
 
-# app.baseURL = ''
+app.baseURL = 'http://localhost:3000'
 # If you have trouble with `.`, you could also use `_`.
 # app_baseURL = ''
-# app.forceGlobalSecureRequests = false
+app.forceGlobalSecureRequests = false
 # app.CSPEnabled = false
 
 #--------------------------------------------------------------------
 # DATABASE
 #--------------------------------------------------------------------
 
-# database.default.hostname = localhost
-# database.default.database = ci4
-# database.default.username = root
-# database.default.password = root
-# database.default.DBDriver = MySQLi
-# database.default.DBPrefix =
-# database.default.port = 3306
+database.default.hostname = localhost
+database.default.database = delta_g
+database.default.username = root
+database.default.password = 
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
 
 # If you use MySQLi as tests, first update the values of Config\Database::$tests.
 # database.tests.hostname = localhost
@@ -67,3 +55,14 @@
 #--------------------------------------------------------------------
 
 # logger.threshold = 4
+
+#--------------------------------------------------------------------
+# CORS
+#--------------------------------------------------------------------
+
+cors.allowedOrigins = 'http://localhost:3000','http://localhost:3000/'
+cors.allowedMethods = GET,POST,PUT,DELETE,OPTIONS
+cors.allowedHeaders = Content-Type,Authorization
+cors.exposedHeaders = 
+cors.allowCredentials = false
+cors.maxAge = 3600

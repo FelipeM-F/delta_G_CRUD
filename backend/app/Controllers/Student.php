@@ -11,24 +11,24 @@ class Student extends ResourceController
 
     public function __construct()
     {
+        
         $this->studentModel = new StudentModel();
-        header("Access-Control-Allow-Origin: http://localhost:3000");
-        header("Access-Control-Allow-Methods: POST,PUT,DELETE, GET, OPTIONS");
-        header("Access-Control-Allow-Headers: X-PINGOTHER,Content-Type, Accept, Authorization");
+        header("Access-Control-Allow-Origin: " . getenv('cors.allowedOrigins'));
+        header("Access-Control-Allow-Methods: " . getenv('cors.allowedMethods'));
+        header("Access-Control-Allow-Headers: " . getenv('cors.allowedHeaders'));
+        header("Access-Control-Expose-Headers: " . getenv('cors.exposedHeaders'));
+        header("Access-Control-Allow-Credentials: " . (getenv('cors.allowCredentials') === 'true' ? 'true' : 'false'));
+        header("Access-Control-Max-Age: " . getenv('cors.maxAge'));
+    
+
         if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            header('HTTP/1.1 200 OK');
-            exit();
+            header('Access-Control-Allow-Origin: *');
+            header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
+            header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method');
+            die(); 
         }
     }
-
-    public function options()
-    {
-        // Respond to the OPTIONS request with the appropriate headers
-        header("Access-Control-Allow-Origin: http://localhost:3000");
-        header("Access-Control-Allow-Methods: POST, PUT, DELETE, GET, OPTIONS");
-        header("Access-Control-Allow-Headers: Content-Type");
-        header("Access-Control-Max-Age: 86400");
-    }
+    
 
     public function list()
     {
@@ -47,63 +47,84 @@ class Student extends ResourceController
 
     public function create()
     {
-        try {
-            $data = $this->request->getJSON(true);
+        $file = $this->request->getFile('photo');
+        if ($file && $file->isValid() && !$file->hasMoved()) {
 
-            $newStudent = [
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'phone' => $data['phone'],
-                'address' => $data['address'],
-                'photo' => $data['photo'],
-            ];
+            $newName = $file->getRandomName();
+            $targetPath = realpath(__DIR__ . '/../../writable/uploads');
+            $file->move($targetPath, $newName);
 
-            $this->studentModel->insert($newStudent);
+            $data = $this->request->getPost();
+            $data['photo'] = $newName;
 
-            return $this->respond(['message' => 'Student added successfully'], 201);
-        } catch (\Exception $e) {
-            return $this->failServerError('Error adding student: ' . $e->getMessage());
+            if ($this->studentModel->insert($data)) {
+                return $this->respondCreated(['message' => 'Student added successfully', 'data' => $data]);
+            } else {
+                return $this->failValidationErrors($this->studentModel->errors());
+            }
         }
+
+        return $this->failValidationErrors('Invalid file.');
     }
 
     public function update($id = null)
     {
         try {
             $data = $this->request->getJSON(true);
-
+    
             $student = $this->studentModel->find($id);
-
+    
             if (!$student) {
                 return $this->fail('Student not found.', 404);
             }
+    
+            if ($student['photo']) {
+                $targetPath = realpath(__DIR__ . '/../../writable/uploads');
+                $filePath = $targetPath . '/' . $student['photo']; 
+                if (file_exists($filePath)) {
+                    unlink($filePath); 
+                }
+            }
+    
             $student['name'] = $data['name'];
             $student['email'] = $data['email'];
             $student['phone'] = $data['phone'];
             $student['address'] = $data['address'];
             $student['photo'] = $data['photo'];
-
+    
             $this->studentModel->update($id, $student);
-
+    
             return $this->respond(['message' => 'Student updated successfully'], 200);
         } catch (\Exception $e) {
             return $this->failServerError('Error updating student: ' . $e->getMessage());
         }
     }
-
+    
+    
     public function delete($id = null)
     {
         try {
             $student = $this->studentModel->find($id);
-
+    
             if (!$student) {
                 return $this->fail('Student not found.', 404);
             }
-
+    
+            if ($student['photo']) {
+                $targetPath = realpath(__DIR__ . '/../../writable/uploads');
+                $filePath = $targetPath . '/' . $student['photo'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+    
             $this->studentModel->delete($id);
-
+    
             return $this->respond(['message' => 'Student deleted successfully'], 200);
         } catch (\Exception $e) {
             return $this->failServerError('Error deleting student: ' . $e->getMessage());
         }
     }
+
+    
 }

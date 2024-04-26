@@ -1,55 +1,86 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  
+  padding: 20px;
+}
+
+
+
+button {
+  background-color: #28a745; 
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  border: none;
+  padding: 10px 20px; 
+  margin-top: 20px; 
+  cursor: pointer; 
+  border-radius: 5px;
 }
 
 .modal {
-  display: none; /* Inicialmente oculto */
+  display: none;
   position: fixed;
   top: 0;
-  right: 0;
-  bottom: 0;
-  width: 400px; /* Largura do modal */
-  background-color: white;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  overflow-y: auto; /* Adicionar barra de rolagem se necessário */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1000;
+  overflow-y: auto;
+}
+.modal.active {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
 }
 
-.modal.active {
-  display: block; /* Exibir o modal quando estiver ativo */
+.modal-content {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+  justify-content: space-around; 
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 50%; 
+  margin: auto;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="file"] {
+  width: 80%;
+  padding: 10px; 
+  margin: 10px 0; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+}
+
+label {
+  align-self: flex-start;
+  margin-left: 10%; 
+}
+
+
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+body, button {
+  font-family: Arial, sans-serif;
+}
+
+.delete-button {
+  background-color: #dc3545; 
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px; 
 }
